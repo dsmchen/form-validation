@@ -3,7 +3,42 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title></title>
+    <title>Form Validation</title>
   </head>
-  <body></body>
+  <body>
+    <form novalidate>
+      <h1>Form Validation</h1>
+      <div class="form-row">
+        <label for="email">Email (required)</label>
+        <input type="email" id="email" required />
+        <span class="error" aria-live="polite"></span>
+      </div>
+      <div class="form-row">
+        <label for="postal-code">Postal code (required)</label>
+        <input type="text" id="postal-code" required />
+        <span class="error" aria-live="polite"></span>
+      </div>
+      <div class="form-row">
+        <label for="country">Country</label>
+        <select id="country">
+          <option value="ch">Switzerland</option>
+          <option value="fr">France</option>
+          <option value="de">Germany</option>
+          <option value="nl">The Netherlands</option>
+        </select>
+        <span class="error" aria-live="polite"></span>
+      </div>
+      <div class="form-row">
+        <label for="password">Password (required)</label>
+        <input type="password" id="password" required />
+        <span class="error" aria-live="polite"></span>
+      </div>
+      <div class="form-row">
+        <label for="confirm-password">Confirm password (required)</label>
+        <input type="password" id="confirm-password" required />
+        <span class="error" aria-live="polite"></span>
+      </div>
+      <button>Validate</button>
+    </form>
+  </body>
 </html>
