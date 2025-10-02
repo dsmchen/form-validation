@@ -88,3 +88,20 @@ password.addEventListener("input", () => {
     checkNumberSymbol.classList.remove("green");
   }
 });
+
+// Validate confirm password
+
+const confirmPassword = document.getElementById("confirm-password");
+const confirmPasswordError = document.querySelector(
+  "#confirm-password + span.error",
+);
+
+confirmPassword.addEventListener("input", () => {
+  if (confirmPassword.validity.valueMissing) {
+    confirmPasswordError.textContent = "Confirm password is required";
+  } else if (confirmPassword.value !== password.value) {
+    confirmPasswordError.textContent = "Confirm password does not match";
+  } else {
+    confirmPasswordError.textContent = "";
+  }
+});
