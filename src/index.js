@@ -8,6 +8,7 @@ const emailError = document.querySelector("#email + span.error");
 email.addEventListener("input", () => {
   if (email.validity.valid) {
     emailError.textContent = "";
+    emailError.className = "error";
   } else {
     showEmailError();
   }
@@ -16,8 +17,10 @@ email.addEventListener("input", () => {
 function showEmailError() {
   if (email.validity.valueMissing) {
     emailError.textContent = "Email is required";
+    emailError.className = "error active";
   } else if (email.validity.typeMismatch) {
     emailError.textContent = "Invalid email format";
+    emailError.className = "error active";
   }
 }
 
@@ -52,8 +55,13 @@ function checkPostalCode() {
 
   if (constraint.test(postalCode.value)) {
     postalCodeError.textContent = "";
+    postalCodeError.className = "error";
+  } else if (postalCode.validity.valueMissing) {
+    postalCodeError.textContent = "Postal code is required";
+    postalCodeError.className = "error active";
   } else {
     postalCodeError.textContent = constraints[countryValue][1];
+    postalCodeError.className = "error active";
   }
 }
 
@@ -63,13 +71,14 @@ postalCode.addEventListener("input", checkPostalCode);
 // Validate password
 
 const password = document.getElementById("password");
+const passwordError = document.querySelector("#password + span.error");
 const checkLength = document.getElementById("check-length");
 const checkUppercase = document.getElementById("check-uppercase");
 const uppercaseRegex = /(?=.*?[A-Z])/;
 const checkNumberSymbol = document.getElementById("check-number-symbol");
 const numberSymbolRegex = /(?=.*?[0-9])|(?=.*?[#?!@$%^&*-])/;
 
-password.addEventListener("input", () => {
+function checkPassword() {
   if (!password.validity.tooShort && password.value.length > 0) {
     checkLength.classList.add("green");
   } else {
@@ -87,7 +96,25 @@ password.addEventListener("input", () => {
   } else {
     checkNumberSymbol.classList.remove("green");
   }
-});
+
+  if (
+    !password.validity.tooShort &&
+    password.value.length > 0 &&
+    uppercaseRegex.test(password.value) &&
+    numberSymbolRegex.test(password.value)
+  ) {
+    passwordError.textContent = "";
+    passwordError.className = "error";
+  } else if (password.validity.valueMissing) {
+    passwordError.textContent = "Password is required";
+    passwordError.className = "error active";
+  } else {
+    passwordError.textContent = "Password does not meet requirements";
+    passwordError.className = "error active";
+  }
+}
+
+password.addEventListener("input", checkPassword);
 
 // Validate confirm password
 
@@ -96,12 +123,38 @@ const confirmPasswordError = document.querySelector(
   "#confirm-password + span.error",
 );
 
-confirmPassword.addEventListener("input", () => {
+function checkConfirmPassword() {
   if (confirmPassword.validity.valueMissing) {
     confirmPasswordError.textContent = "Confirm password is required";
+    confirmPasswordError.className = "error active";
   } else if (confirmPassword.value !== password.value) {
     confirmPasswordError.textContent = "Confirm password does not match";
+    confirmPasswordError.className = "error active";
   } else {
     confirmPasswordError.textContent = "";
+    confirmPasswordError.className = "error";
+  }
+}
+
+confirmPassword.addEventListener("input", checkConfirmPassword);
+
+// Validate form
+
+const form = document.querySelector("form");
+const formSuccess = document.querySelector(".success");
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+  showEmailError();
+  checkPostalCode();
+  checkPassword();
+  checkConfirmPassword();
+
+  const activeErrors = document.querySelectorAll(".error.active");
+
+  if (!activeErrors.length) {
+    formSuccess.textContent = "Form is valid! High five!";
+  } else {
+    formSuccess.textContent = "";
   }
 });

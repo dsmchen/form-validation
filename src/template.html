@@ -30,6 +30,7 @@
       <div class="form-row">
         <label for="password">Password (required)</label>
         <input type="password" id="password" minlength="8" required />
+        <span class="error" aria-live="polite"></span>
         <ul class="checks">
           <li id="check-length" class="check">At least 8 characters long</li>
           <li id="check-uppercase" class="check">
@@ -46,6 +47,7 @@
         <span class="error" aria-live="polite"></span>
       </div>
       <button>Validate</button>
+      <span class="success" aria-live="polite"></span>
     </form>
   </body>
 </html>

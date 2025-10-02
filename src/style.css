@@ -177,6 +177,8 @@ span.error {
   background-color: var(--gray-400);
 }
 
+/* Success */
+
 .check.green {
   color: var(--green-900);
 }
@@ -190,4 +192,10 @@ span.error {
   background-repeat: no-repeat;
   background-position: center;
   background-size: 15px;
+}
+
+.success {
+  display: block;
+  text-align: right;
+  color: var(--green-900);
 }
