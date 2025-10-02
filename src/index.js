@@ -59,3 +59,32 @@ function checkPostalCode() {
 
 country.addEventListener("change", checkPostalCode);
 postalCode.addEventListener("input", checkPostalCode);
+
+// Validate password
+
+const password = document.getElementById("password");
+const checkLength = document.getElementById("check-length");
+const checkUppercase = document.getElementById("check-uppercase");
+const uppercaseRegex = /(?=.*?[A-Z])/;
+const checkNumberSymbol = document.getElementById("check-number-symbol");
+const numberSymbolRegex = /(?=.*?[0-9])|(?=.*?[#?!@$%^&*-])/;
+
+password.addEventListener("input", () => {
+  if (!password.validity.tooShort && password.value.length > 0) {
+    checkLength.classList.add("green");
+  } else {
+    checkLength.classList.remove("green");
+  }
+
+  if (uppercaseRegex.test(password.value)) {
+    checkUppercase.classList.add("green");
+  } else {
+    checkUppercase.classList.remove("green");
+  }
+
+  if (numberSymbolRegex.test(password.value)) {
+    checkNumberSymbol.classList.add("green");
+  } else {
+    checkNumberSymbol.classList.remove("green");
+  }
+});

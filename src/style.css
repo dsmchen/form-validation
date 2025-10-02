@@ -92,9 +92,11 @@ h6 {
 /* Form Validation */
 
 :root {
-  --red-600: #e53935;
+  --red-900: #b71c1c;
+  --green-900: #1b5e20;
   --gray-400: #bdbdbd;
   --gray-900: #212121;
+  --white: #fff;
 }
 
 body {
@@ -148,9 +150,44 @@ form button {
 /* Error */
 
 input:user-invalid {
-  border-color: var(--red-600);
+  border-color: var(--red-900);
 }
 
 span.error {
-  color: var(--red-600);
+  color: var(--red-900);
+}
+
+.checks {
+  list-style: none;
+  padding-left: 0;
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.check::before {
+  content: "";
+  display: block;
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  background-color: var(--gray-400);
+}
+
+.check.green {
+  color: var(--green-900);
+}
+
+.check.green::before {
+  height: 15px;
+  width: 15px;
+  border-radius: 0;
+  background-color: var(--white);
+  background-image: url(./assets/icons/check-green-900.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 15px;
 }
