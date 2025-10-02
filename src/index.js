@@ -8,7 +8,6 @@ const emailError = document.querySelector("#email + span.error");
 email.addEventListener("input", () => {
   if (email.validity.valid) {
     emailError.textContent = "";
-    emailError.className = "error";
   } else {
     showEmailError();
   }
@@ -17,10 +16,8 @@ email.addEventListener("input", () => {
 function showEmailError() {
   if (email.validity.valueMissing) {
     emailError.textContent = "Email is required";
-    emailError.className = "error active";
   } else if (email.validity.typeMismatch) {
     emailError.textContent = "Invalid email format";
-    emailError.className = "error active";
   }
 }
 
@@ -54,14 +51,14 @@ function checkPostalCode() {
   const constraint = new RegExp(constraints[countryValue][0], "");
 
   if (constraint.test(postalCode.value)) {
+    postalCode.setCustomValidity("");
     postalCodeError.textContent = "";
-    postalCodeError.className = "error";
   } else if (postalCode.validity.valueMissing) {
-    postalCodeError.textContent = "Postal code is required";
-    postalCodeError.className = "error active";
+    postalCode.setCustomValidity("Postal code is required");
+    postalCodeError.textContent = postalCode.validationMessage;
   } else {
-    postalCodeError.textContent = constraints[countryValue][1];
-    postalCodeError.className = "error active";
+    postalCode.setCustomValidity(constraints[countryValue][1]);
+    postalCodeError.textContent = postalCode.validationMessage;
   }
 }
 
@@ -103,14 +100,14 @@ function checkPassword() {
     uppercaseRegex.test(password.value) &&
     numberSymbolRegex.test(password.value)
   ) {
+    password.setCustomValidity("");
     passwordError.textContent = "";
-    passwordError.className = "error";
   } else if (password.validity.valueMissing) {
-    passwordError.textContent = "Password is required";
-    passwordError.className = "error active";
+    password.setCustomValidity("Password is required");
+    passwordError.textContent = password.validationMessage;
   } else {
-    passwordError.textContent = "Password does not meet requirements";
-    passwordError.className = "error active";
+    password.setCustomValidity("Password does not meet requirements");
+    passwordError.textContent = password.validationMessage;
   }
 }
 
@@ -125,14 +122,14 @@ const confirmPasswordError = document.querySelector(
 
 function checkConfirmPassword() {
   if (confirmPassword.validity.valueMissing) {
-    confirmPasswordError.textContent = "Confirm password is required";
-    confirmPasswordError.className = "error active";
+    confirmPassword.setCustomValidity("Confirm password is required");
+    confirmPasswordError.textContent = confirmPassword.validationMessage;
   } else if (confirmPassword.value !== password.value) {
-    confirmPasswordError.textContent = "Confirm password does not match";
-    confirmPasswordError.className = "error active";
+    confirmPassword.setCustomValidity("Confirm password does not match");
+    confirmPasswordError.textContent = confirmPassword.validationMessage;
   } else {
+    confirmPassword.setCustomValidity("");
     confirmPasswordError.textContent = "";
-    confirmPasswordError.className = "error";
   }
 }
 
@@ -150,9 +147,12 @@ form.addEventListener("submit", (event) => {
   checkPassword();
   checkConfirmPassword();
 
-  const activeErrors = document.querySelectorAll(".error.active");
-
-  if (!activeErrors.length) {
+  if (
+    email.validity.valid &&
+    postalCode.validity.valid &&
+    password.validity.valid &&
+    confirmPassword.validity.valid
+  ) {
     formSuccess.textContent = "Form is valid! High five!";
   } else {
     formSuccess.textContent = "";
